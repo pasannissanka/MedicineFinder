@@ -1,7 +1,15 @@
-import React from "react";
-import * as Yup from "yup";
-import { Formik, Field } from "formik";
+import { Formik, Form } from "formik";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import * as Yup from "yup";
+import { loginAPI } from "../../api/login.api";
+import { AuthContext } from "../../context/AuthContext";
+import FormField from "../FormField/FormField";
+
+export interface LoginReqBody {
+  email: string;
+  password: string;
+}
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
@@ -9,18 +17,33 @@ const LoginSchema = Yup.object().shape({
 });
 
 const Login = () => {
+  const { login } = useContext(AuthContext);
   return (
     <div className="flex flex-col items-center">
       <div className="text-xl font-medium my-2">Login</div>
       <div className="border-b border-gray-200 w-full"></div>
-      <Formik initialValues={{}} onSubmit={(value) => {}}>
+      <Formik<LoginReqBody>
+        validationSchema={LoginSchema}
+        initialValues={{
+          email: "",
+          password: "",
+        }}
+        onSubmit={async (value) => {
+          if (value) {
+            const data = await loginAPI(value);
+            if (data && data.data.token) {
+              login(data?.data.token);
+            }
+          }
+        }}
+      >
         {() => (
-          <div className="my-4 px-4 flex flex-col gap-2 w-full ">
-            <Field type="email" name="email" placeholder="Email" />
-            <Field type="password" name="password" placeholder="Password" />
+          <Form className="my-4 px-4 flex flex-col gap-2 w-full ">
+            <FormField type="email" name="email" placeholder="Email" />
+            <FormField type="password" name="password" placeholder="Password" />
             <div className="flex justify-between items-center">
               <span className="text-sm">
-                Customer: 
+                Customer:
                 <Link
                   className="ml-1 text-blue-700 hover:underline hover:text-blue-500 duration-150"
                   to={`/auth/register/customer`}
@@ -28,12 +51,15 @@ const Login = () => {
                   Sign up
                 </Link>
               </span>
-              <button className="px-4 py-2 border bg-blue-700 text-white rounded-md hover:bg-blue-500 duration-150">
+              <button
+                type="submit"
+                className="px-4 py-2 border bg-blue-700 text-white rounded-md hover:bg-blue-500 duration-150"
+              >
                 Login
               </button>
             </div>
             <div className="text-sm flex justify-start">
-              Pharmaceutical Institute: 
+              Pharmaceutical Institute:
               <Link
                 className="ml-1 text-blue-700 hover:underline hover:text-blue-500 duration-150"
                 to={`/auth/register/pharmacy`}
@@ -41,7 +67,7 @@ const Login = () => {
                 Sign up
               </Link>
             </div>
-          </div>
+          </Form>
         )}
       </Formik>
     </div>

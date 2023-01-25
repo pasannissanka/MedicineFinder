@@ -1,7 +1,7 @@
-import { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./components/Login/Login";
 import Register from "./components/Register";
+import { AuthProvider } from "./context/AuthContext";
 import AuthPage from "./pages/Auth/Auth";
 import NotFoundPage from "./pages/Error/NotFoundPage";
 import { USER_TYPES } from "./utils/enum";
@@ -33,11 +33,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <div className="flex justify-center">
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </div>
   );
 }
