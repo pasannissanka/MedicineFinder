@@ -55,4 +55,11 @@ public class PharmaService {
         List<Pharma> pharmas = pharmaRepository.findAll();
         return pharmas.stream().map(el -> new PharmaDto().toPharmaDto(el)).toList();
     }
+
+    public PharmaDto findPharmaUser(String user_id) throws Exception {
+        Optional<Pharma> pharmaUser = pharmaRepository.findByUser_Id(user_id);
+        if (pharmaUser.isEmpty())
+            throw new Exception("User not found");
+        return new PharmaDto().toPharmaDto(pharmaUser.get());
+    }
 }

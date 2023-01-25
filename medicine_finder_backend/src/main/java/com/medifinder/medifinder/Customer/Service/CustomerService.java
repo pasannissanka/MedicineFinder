@@ -7,6 +7,8 @@ import com.medifinder.medifinder.Customer.Dto.CreateCustomerReqDto;
 import com.medifinder.medifinder.Customer.Dto.CustomerDto;
 import com.medifinder.medifinder.Customer.Model.Customer;
 import com.medifinder.medifinder.Customer.Repository.CustomerRepository;
+import com.medifinder.medifinder.Pharma.Dto.PharmaDto;
+import com.medifinder.medifinder.Pharma.Models.Pharma;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -49,6 +51,13 @@ public class CustomerService {
         );
 
         return new CustomerDto().toCustomerDto(newCustomer);
+    }
+
+    public CustomerDto findCustomerUser(String user_id) throws Exception {
+        Optional<Customer> customer = customerRepository.findByUser_Id(user_id);
+        if (customer.isEmpty())
+            throw new Exception("User not found");
+        return new CustomerDto().toCustomerDto(customer.get());
     }
 
 }

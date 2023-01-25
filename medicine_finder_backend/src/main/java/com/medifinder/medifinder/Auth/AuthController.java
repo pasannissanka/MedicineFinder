@@ -1,9 +1,8 @@
 package com.medifinder.medifinder.Auth;
 
-import com.medifinder.medifinder.Auth.Dto.AuthenticatedRequest;
-import com.medifinder.medifinder.Auth.Dto.AuthenticatedResponse;
-import com.medifinder.medifinder.Auth.Dto.CreateNewUserReqBody;
-import com.medifinder.medifinder.Auth.Dto.UserDto;
+import com.medifinder.medifinder.Auth.Dto.*;
+import com.medifinder.medifinder.Auth.Model.Role;
+import com.medifinder.medifinder.Auth.Repository.UserRepository;
 import com.medifinder.medifinder.Auth.Service.AuthenticationService;
 import com.medifinder.medifinder.Auth.Service.UserService;
 import com.medifinder.medifinder.Customer.Dto.CreateCustomerReqDto;
@@ -14,6 +13,7 @@ import com.medifinder.medifinder.Pharma.Dto.PharmaDto;
 import com.medifinder.medifinder.Pharma.Service.PharmaService;
 import com.medifinder.medifinder.Utils.Models.ResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -29,24 +29,37 @@ public class AuthController {
 
     @Autowired
     private AuthenticationService authenticationService;
+    @Autowired
+    private UserRepository userRepository;
 
-
-    @PostMapping
-    public ResponseBody<UserDto> createUser(@RequestBody CreateNewUserReqBody body) {
+    @GetMapping()
+    public ResponseBody<?> me(Authentication authentication) {
         try {
-            UserDto data = userService.createNewUser(body);
-            return new ResponseBody<UserDto>().setData(data).setMessage("SUCCESS");
+            UserDto user = userService.findUserByEmail(authentication.getName());
+            if (user.getRole().equals(Role.CUSTOMER)) {
+                CustomerDto customerDto = customerService.findCustomerUser(user.getId());
+                return new ResponseBody<CustomerDto>()
+                        .setMessage("SUCCESS")
+                        .setData(customerDto);
+            } else {
+                PharmaDto pharmaDto = pharmaService.findPharmaUser(user.getId());
+                return new ResponseBody<PharmaDto>()
+                        .setMessage("SUCCESS")
+                        .setData(pharmaDto);
+            }
         } catch (Exception ex) {
-            return new ResponseBody<UserDto>().setMessage("ERROR").setError(ex.getMessage());
+            return new ResponseBody<LoggedUserResponseDto>()
+                    .setMessage("ERROR")
+                    .setError(ex.getMessage());
         }
     }
 
-    @PostMapping("/authenticate")
+    @PostMapping("/public/authenticate")
     public ResponseBody<AuthenticatedResponse> authenticate(@RequestBody AuthenticatedRequest request) {
         return new ResponseBody<AuthenticatedResponse>().setMessage("SUCCESS").setData(authenticationService.authenticate(request));
     }
 
-    @PostMapping("/customer")
+    @PostMapping("/public/customer")
     public ResponseBody<CustomerDto> createCustomer(@RequestBody CreateCustomerReqDto reqDto) {
         try {
             CustomerDto data = customerService.createCustomer(reqDto);
@@ -56,7 +69,7 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/pharma")
+    @PostMapping("/public/pharma")
     public ResponseBody<PharmaDto> createPharmaUser(@RequestBody CreatePharmaReqDto reqDto) {
         try {
             PharmaDto data = pharmaService.createPharmaUser(reqDto);
@@ -65,6 +78,4 @@ public class AuthController {
             return new ResponseBody<PharmaDto>().setError(ex.getMessage()).setMessage("ERROR");
         }
     }
-
-
 }

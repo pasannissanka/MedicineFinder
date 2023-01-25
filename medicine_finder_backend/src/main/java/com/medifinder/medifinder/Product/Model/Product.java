@@ -20,6 +20,7 @@ public class Product {
     private String genericName;
     private double price;
     private boolean isAvailable;
+    private String description;
 
 
     @ManyToMany(mappedBy = "products")

@@ -32,4 +32,11 @@ public class UserService {
 
         return new UserDto().toUserDto(newUser);
     }
+
+    public UserDto findUserByEmail(String email) throws Exception {
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isEmpty())
+            throw new Exception("User not found");
+        return new UserDto().toUserDto(user.get());
+    }
 }
