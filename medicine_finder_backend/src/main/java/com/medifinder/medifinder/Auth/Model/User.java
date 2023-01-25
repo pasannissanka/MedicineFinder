@@ -13,7 +13,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "AuthUser")
+@Table(name = "auth_user")
 @Accessors(chain = true)
 @NoArgsConstructor
 public class User implements UserDetails {

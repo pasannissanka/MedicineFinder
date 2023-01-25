@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 
 @Entity
 @Data
-@Table(name = "Customer")
+@Table(name = "customer")
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)

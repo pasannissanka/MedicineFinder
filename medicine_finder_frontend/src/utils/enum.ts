@@ -1,4 +1,4 @@
 export enum USER_TYPES {
-    CUSTOMER = "CUSTOMER";
+    CUSTOMER = "CUSTOMER",
     PHARMA = "PHARMA"
 }
