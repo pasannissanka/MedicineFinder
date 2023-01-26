@@ -25,11 +25,6 @@ public class Pharma {
     private User user;
     private String details;
     private String address;
-    @ManyToMany()
-    @JoinTable(
-            name = "product_pharma",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "pharmacy_id")
-    )
+    @OneToMany(mappedBy = "pharma")
     private Set<Product> products;
 }

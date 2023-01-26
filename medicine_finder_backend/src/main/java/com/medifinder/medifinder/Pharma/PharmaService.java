@@ -44,6 +44,7 @@ public class PharmaService {
                 new Pharma()
                         .setDetails(reqDto.getDetails())
                         .setUser(newUser)
+                        .setAddress(reqDto.getAddress())
         );
         return new PharmaDto().toPharmaDto(newPharma);
     }
@@ -59,5 +60,19 @@ public class PharmaService {
         if (pharmaUser.isEmpty())
             throw new Exception("User not found");
         return new PharmaDto().toPharmaDto(pharmaUser.get());
+    }
+
+    public PharmaDto findPharmaUserById(String id) throws Exception {
+        Optional<Pharma> pharmaUser = pharmaRepository.findById(id);
+        if (pharmaUser.isEmpty())
+            throw new Exception("User not found");
+        return new PharmaDto().toPharmaDto(pharmaUser.get());
+    }
+
+    public PharmaDto findPharamUserByEmail(String email) throws Exception {
+        Optional<Pharma> pharma = pharmaRepository.findByUser_Email(email);
+        if (pharma.isEmpty())
+            throw new Exception("Not found");
+        return new PharmaDto().toPharmaDto(pharma.get());
     }
 }
