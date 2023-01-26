@@ -1,6 +1,8 @@
-import { Formik } from "formik";
-import { Link } from "react-router-dom";
+import { Form, Formik } from "formik";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import { registerCustomerAPI } from "../../api/register.api";
+import { ICreateCustomer } from "../../utils/types";
 import FormField from "../FormField/FormField";
 
 const SignupSchema = Yup.object().shape({
@@ -15,6 +17,8 @@ const SignupSchema = Yup.object().shape({
 });
 
 export const RegisterCustomer = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="flex flex-col items-center">
       <div className="text-xl font-medium my-2">Register</div>
@@ -22,18 +26,37 @@ export const RegisterCustomer = () => {
       <Formik
         validationSchema={SignupSchema}
         initialValues={{
-            email: "",
-            password: "",
-            retypePassword: "",
-            firstName: "",
-            lastName: ""
+          email: "",
+          password: "",
+          retypePassword: "",
+          firstName: "",
+          lastName: "",
         }}
-        onSubmit={(value) => {
-          console.log(value);
+        onSubmit={async ({
+          email,
+          firstName,
+          lastName,
+          password,
+          retypePassword,
+        }) => {
+          if (password === retypePassword) {
+            const payload: ICreateCustomer = {
+              email,
+              firstName,
+              lastName,
+              password,
+            };
+            try {
+              const response = await registerCustomerAPI(payload);
+              navigate("/auth");
+            } catch (error) {
+              // TODO error handling
+            }
+          }
         }}
       >
         {() => (
-          <div className="my-4 px-4 flex flex-col gap-3 w-full ">
+          <Form className="my-4 px-4 flex flex-col gap-3 w-full ">
             <FormField name="email" placeholder="Email" type="email" />
             <FormField name="password" placeholder="Password" type="password" />
             <FormField
@@ -48,7 +71,7 @@ export const RegisterCustomer = () => {
                 Already have an account?
                 <Link
                   className="ml-1 text-blue-700 hover:underline hover:text-blue-500 duration-150"
-                  to={`/auth/login`}
+                  to={`/auth`}
                 >
                   Login
                 </Link>
@@ -60,7 +83,7 @@ export const RegisterCustomer = () => {
                 Sign up
               </button>
             </div>
-          </div>
+          </Form>
         )}
       </Formik>
     </div>

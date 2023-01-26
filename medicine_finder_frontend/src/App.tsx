@@ -17,11 +17,9 @@ const router = createBrowserRouter([
     errorElement: <NotFoundPage />,
     loader: async () => {
       try {
-        console.log("here")
         const data =  await meAPI();
         return data
       } catch (error) {
-        console.log(error)
         return null;
       }
     },
@@ -37,7 +35,7 @@ const router = createBrowserRouter([
     element: <AuthPage />,
     children: [
       {
-        path: "login",
+        path: "",
         element: <Login />,
       },
       {

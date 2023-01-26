@@ -37,3 +37,17 @@ export interface IPharmaUser {
   user: IAuthUser;
   details: string;
 }
+
+export interface ICreateCustomer {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+}
+
+export interface ICreatePharma {
+  email: string;
+  password: string;
+  details: string
+  address: string;
+}

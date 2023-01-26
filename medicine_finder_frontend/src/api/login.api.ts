@@ -18,5 +18,5 @@ export const meAPI = async () => {
   const response = await AxiosClient.get<
     ResponseBody<ICustomerUser | IPharmaUser>
   >("/auth");
-  return response;
+  return response.data;
 };
