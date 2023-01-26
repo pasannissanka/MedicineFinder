@@ -2,15 +2,14 @@ package com.medifinder.medifinder.Auth;
 
 import com.medifinder.medifinder.Auth.Dto.*;
 import com.medifinder.medifinder.Auth.Model.Role;
-import com.medifinder.medifinder.Auth.Repository.UserRepository;
 import com.medifinder.medifinder.Auth.Service.AuthenticationService;
 import com.medifinder.medifinder.Auth.Service.UserService;
 import com.medifinder.medifinder.Customer.Dto.CreateCustomerReqDto;
 import com.medifinder.medifinder.Customer.Dto.CustomerDto;
-import com.medifinder.medifinder.Customer.Service.CustomerService;
+import com.medifinder.medifinder.Customer.CustomerService;
 import com.medifinder.medifinder.Pharma.Dto.CreatePharmaReqDto;
 import com.medifinder.medifinder.Pharma.Dto.PharmaDto;
-import com.medifinder.medifinder.Pharma.Service.PharmaService;
+import com.medifinder.medifinder.Pharma.PharmaService;
 import com.medifinder.medifinder.Utils.Models.ResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

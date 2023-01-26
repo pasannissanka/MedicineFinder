@@ -1,4 +1,4 @@
-package com.medifinder.medifinder.Customer.Repository;
+package com.medifinder.medifinder.Customer;
 
 import com.medifinder.medifinder.Customer.Model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;

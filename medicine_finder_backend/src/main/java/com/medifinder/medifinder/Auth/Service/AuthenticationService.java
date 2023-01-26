@@ -2,7 +2,7 @@ package com.medifinder.medifinder.Auth.Service;
 
 import com.medifinder.medifinder.Auth.Dto.AuthenticatedRequest;
 import com.medifinder.medifinder.Auth.Dto.AuthenticatedResponse;
-import com.medifinder.medifinder.Auth.Repository.UserRepository;
+import com.medifinder.medifinder.Auth.UserRepository;
 import com.medifinder.medifinder.Utils.Config.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -1,21 +1,19 @@
-package com.medifinder.medifinder.Pharma.Service;
+package com.medifinder.medifinder.Pharma;
 
 import com.medifinder.medifinder.Auth.Model.Role;
 import com.medifinder.medifinder.Auth.Model.User;
-import com.medifinder.medifinder.Auth.Repository.UserRepository;
+import com.medifinder.medifinder.Auth.UserRepository;
 import com.medifinder.medifinder.Pharma.Dto.CreatePharmaReqDto;
 import com.medifinder.medifinder.Pharma.Dto.PharmaDto;
 import com.medifinder.medifinder.Pharma.Models.Pharma;
-import com.medifinder.medifinder.Pharma.Repository.PharmaRepository;
+import com.medifinder.medifinder.Pharma.PharmaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor

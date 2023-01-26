@@ -1,4 +1,4 @@
-package com.medifinder.medifinder.Pharma.Repository;
+package com.medifinder.medifinder.Pharma;
 
 import com.medifinder.medifinder.Pharma.Models.Pharma;
 import org.springframework.data.jpa.repository.JpaRepository;

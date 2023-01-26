@@ -2,7 +2,6 @@ package com.medifinder.medifinder.Pharma;
 
 import com.medifinder.medifinder.Pharma.Dto.CreatePharmaReqDto;
 import com.medifinder.medifinder.Pharma.Dto.PharmaDto;
-import com.medifinder.medifinder.Pharma.Service.PharmaService;
 import com.medifinder.medifinder.Utils.Models.ResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

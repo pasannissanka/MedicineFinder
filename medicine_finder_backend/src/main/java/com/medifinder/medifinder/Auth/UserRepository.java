@@ -1,4 +1,4 @@
-package com.medifinder.medifinder.Auth.Repository;
+package com.medifinder.medifinder.Auth;
 
 import com.medifinder.medifinder.Auth.Model.User;
 import org.springframework.data.jpa.repository.JpaRepository;

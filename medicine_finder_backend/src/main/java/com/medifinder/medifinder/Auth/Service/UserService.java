@@ -3,7 +3,7 @@ package com.medifinder.medifinder.Auth.Service;
 import com.medifinder.medifinder.Auth.Dto.CreateNewUserReqBody;
 import com.medifinder.medifinder.Auth.Dto.UserDto;
 import com.medifinder.medifinder.Auth.Model.User;
-import com.medifinder.medifinder.Auth.Repository.UserRepository;
+import com.medifinder.medifinder.Auth.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

@@ -1,6 +1,6 @@
 package com.medifinder.medifinder.Utils.Config;
 
-import com.medifinder.medifinder.Auth.Repository.UserRepository;
+import com.medifinder.medifinder.Auth.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

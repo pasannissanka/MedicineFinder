@@ -1,14 +1,12 @@
-package com.medifinder.medifinder.Customer.Service;
+package com.medifinder.medifinder.Customer;
 
 import com.medifinder.medifinder.Auth.Model.Role;
 import com.medifinder.medifinder.Auth.Model.User;
-import com.medifinder.medifinder.Auth.Repository.UserRepository;
+import com.medifinder.medifinder.Auth.UserRepository;
 import com.medifinder.medifinder.Customer.Dto.CreateCustomerReqDto;
 import com.medifinder.medifinder.Customer.Dto.CustomerDto;
 import com.medifinder.medifinder.Customer.Model.Customer;
-import com.medifinder.medifinder.Customer.Repository.CustomerRepository;
-import com.medifinder.medifinder.Pharma.Dto.PharmaDto;
-import com.medifinder.medifinder.Pharma.Models.Pharma;
+import com.medifinder.medifinder.Customer.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

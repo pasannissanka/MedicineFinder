@@ -2,7 +2,6 @@ package com.medifinder.medifinder.Customer;
 
 import com.medifinder.medifinder.Customer.Dto.CreateCustomerReqDto;
 import com.medifinder.medifinder.Customer.Dto.CustomerDto;
-import com.medifinder.medifinder.Customer.Service.CustomerService;
 import com.medifinder.medifinder.Utils.Models.ResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
