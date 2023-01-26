@@ -35,7 +35,7 @@ public class PharmaService {
         }
         User newUser = userRepository.save(
                 new User(
-                        reqDto.getEmail(),
+                        reqDto.getEmail().toLowerCase(),
                         passwordEncoder.encode(reqDto.getPassword()),
                         Role.PHARMA
                 )

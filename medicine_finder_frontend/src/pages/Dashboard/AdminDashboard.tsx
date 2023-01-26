@@ -5,7 +5,9 @@ const AdminDashboard = () => {
   return (
     <div>
         <Navbar />
-        content
+        <div className='flex justify-center my-2'>
+            Content
+        </div>
     </div>
   )
 }

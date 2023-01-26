@@ -1,11 +1,13 @@
-import React from 'react'
+import React from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <div className='w-screen h-11 px-8 shadow-md bg-blue-700 flex items-center text-white'>
-        <div>Navbar</div>
-    </div>
-  )
-}
+    <div className="w-screen h-12 px-8 shadow-md bg-blue-700 flex items-center text-white">
+      <Link to={"/"}>Medicine Finder</Link>
 
-export default Navbar
+    </div>
+  );
+};
+
+export default Navbar;

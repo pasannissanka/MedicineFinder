@@ -41,6 +41,20 @@ public class ProductController {
         }
     }
 
+    @GetMapping()
+    public ResponseBody<List<ProductDto>> search() {
+        try {
+            List<ProductDto> products = productService.searchProducts();
+            return new ResponseBody<List<ProductDto>>()
+                    .setMessage("SUCCESS")
+                    .setData(products);
+        } catch (Exception ex) {
+            return new ResponseBody<List<ProductDto>>()
+                    .setMessage("ERROR")
+                    .setError(ex.getMessage());
+        }
+    }
+
     @GetMapping("/{id}")
     public ResponseBody<ProductDto> getProductById(@PathVariable String id) {
         try {

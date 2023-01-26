@@ -26,7 +26,7 @@ public class PharmaController {
     }
 
     @GetMapping()
-    public ResponseBody<List<PharmaDto>> findAllPharmaUsers() {
+    public ResponseBody<List<PharmaDto>> search() {
         List<PharmaDto> pharmaDtoList = pharmaService.findAllPharmaUsers();
         return new ResponseBody<List<PharmaDto>>()
                 .setMessage("SUCCESS")
