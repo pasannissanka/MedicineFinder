@@ -14,12 +14,9 @@ export const loginAPI = async (payload: LoginReqBody) => {
   return null;
 };
 
-export const meAPI = async (token: string) => {
+export const meAPI = async () => {
   const response = await AxiosClient.get<
     ResponseBody<ICustomerUser | IPharmaUser>
   >("/auth");
-  if (response.status === 200) {
-    return response.data;
-  }
-  return null;
+  return response;
 };

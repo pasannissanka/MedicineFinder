@@ -1,19 +1,21 @@
 import { USER_TYPES } from "./enum";
 
 export type AuthContextData = {
-    authenticatedUser?: IAuthenticatedUser;
-    login: (token: string) => void;
-    logout: () => void;
-}
+  authenticatedUser?: IAuthenticatedUser;
+  login: (token: string) => void;
+  logout: () => void;
+  setUser: (user: IPharmaUser | ICustomerUser) => void;
+};
 
 export interface ResponseBody<T> {
-    message: string;
-    data: T;
-    error: any;
+  message: string;
+  data: T;
+  error: any;
 }
 
 export interface IAuthenticatedUser {
   user: ICustomerUser | IPharmaUser;
+  token: string;
 }
 
 export interface IAuthUser {

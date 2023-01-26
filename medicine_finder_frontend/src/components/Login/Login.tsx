@@ -1,6 +1,6 @@
 import { Formik, Form } from "formik";
-import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { loginAPI } from "../../api/login.api";
 import { AuthContext } from "../../context/AuthContext";
@@ -17,7 +17,13 @@ const LoginSchema = Yup.object().shape({
 });
 
 const Login = () => {
-  const { login } = useContext(AuthContext);
+  const { login, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    logout();
+  }, []);
+
   return (
     <div className="flex flex-col items-center">
       <div className="text-xl font-medium my-2">Login</div>
@@ -33,6 +39,7 @@ const Login = () => {
             const data = await loginAPI(value);
             if (data && data.data.token) {
               login(data?.data.token);
+              navigate("/");
             }
           }
         }}

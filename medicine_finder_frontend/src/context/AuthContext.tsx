@@ -6,35 +6,47 @@ import React, {
   useState,
 } from "react";
 import { meAPI } from "../api/login.api";
-import { AuthContextData, IAuthenticatedUser } from "../utils/types";
+import {
+  AuthContextData,
+  IAuthenticatedUser,
+  ICustomerUser,
+  IPharmaUser,
+} from "../utils/types";
 
 export const AuthContext = createContext<AuthContextData>({
   login: () => {},
   logout: () => {},
   authenticatedUser: undefined,
+  setUser: () => {},
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [authenticatedUser, setAuthenticatedUser] =
     useState<IAuthenticatedUser>();
 
-  useEffect(() => {
-    const token = localStorage.getItem("auth_token");
-    if (token) {
-      login(token);
-    }
-
-    return () => {
-      setAuthenticatedUser(undefined);
-    };
-  }, []);
 
   const login = useCallback(async (token: string) => {
     localStorage.setItem("auth_token", token);
-    const data = await meAPI(token);
-    if (data && data.data) {
+    try {
+      const data = await meAPI();
+      if (data && data.data) {
+        setAuthenticatedUser({
+          user: data.data.data,
+          token,
+        });
+      }
+    } catch (error) {
+      setAuthenticatedUser(undefined);
+      localStorage.removeItem("auth_token");
+    }
+  }, []);
+
+  const setUser = useCallback((user: IPharmaUser | ICustomerUser) => {
+    const token = localStorage.getItem("auth_token");
+    if (token) {
       setAuthenticatedUser({
-        user: data.data,
+        token,
+        user,
       });
     }
   }, []);
@@ -50,6 +62,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         authenticatedUser,
         login,
         logout,
+        setUser,
       }}
     >
       {children}
