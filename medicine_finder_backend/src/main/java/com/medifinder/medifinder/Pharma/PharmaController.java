@@ -2,8 +2,9 @@ package com.medifinder.medifinder.Pharma;
 
 import com.medifinder.medifinder.Pharma.Dto.CreatePharmaReqDto;
 import com.medifinder.medifinder.Pharma.Dto.PharmaDto;
-import com.medifinder.medifinder.Utils.Models.ResponseBody;
+import com.medifinder.medifinder.Utils.Dto.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,21 +17,15 @@ public class PharmaController {
     private PharmaService pharmaService;
 
     @PostMapping()
-    public ResponseBody<PharmaDto> createPharmaUser(@RequestBody CreatePharmaReqDto reqDto) {
-        try {
-            PharmaDto data = pharmaService.createPharmaUser(reqDto);
-            return new ResponseBody<PharmaDto>().setData(data).setMessage("SUCCESS");
-        } catch (Exception ex) {
-            return new ResponseBody<PharmaDto>().setError(ex.getMessage()).setMessage("ERROR");
-        }
+    public ResponseEntity<Response<PharmaDto>> createPharmaUser(@RequestBody CreatePharmaReqDto reqDto) throws Exception {
+        PharmaDto data = pharmaService.createPharmaUser(reqDto);
+        return ResponseEntity.ok().body(Response.ok(data));
     }
 
     @GetMapping()
-    public ResponseBody<List<PharmaDto>> search() {
+    public ResponseEntity<Response<List<PharmaDto>>> search() {
         List<PharmaDto> pharmaDtoList = pharmaService.findAllPharmaUsers();
-        return new ResponseBody<List<PharmaDto>>()
-                .setMessage("SUCCESS")
-                .setData(pharmaDtoList);
+        return ResponseEntity.ok().body(Response.ok(pharmaDtoList));
     }
 
 

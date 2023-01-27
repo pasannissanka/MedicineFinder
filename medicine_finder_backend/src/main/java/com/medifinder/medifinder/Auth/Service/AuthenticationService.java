@@ -23,11 +23,11 @@ public class AuthenticationService {
     public AuthenticatedResponse authenticate(AuthenticatedRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
+                        request.getEmail().toLowerCase(),
                         request.getPassword()
                 )
         );
-        var user = repository.findByEmail(request.getEmail())
+        var user = repository.findByEmail(request.getEmail().toLowerCase())
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         return new AuthenticatedResponse().setToken(jwtToken);

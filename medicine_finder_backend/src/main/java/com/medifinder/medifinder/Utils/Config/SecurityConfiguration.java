@@ -1,7 +1,7 @@
 package com.medifinder.medifinder.Utils.Config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.medifinder.medifinder.Utils.Models.ResponseBody;
+import com.medifinder.medifinder.Utils.Dto.Response;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
@@ -37,7 +36,11 @@ public class SecurityConfiguration {
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
             ServletOutputStream out = response.getOutputStream();
-            new ObjectMapper().writeValue(out, new ResponseBody<>().setMessage("FORBIDDEN").setError(ex.getMessage()));
+
+            Response<Object> responseBody = Response.accessDenied();
+            responseBody.addErrorMsgToResponse("Access Denied", ex);
+
+            new ObjectMapper().writeValue(out, responseBody);
             out.flush();
         };
     }
@@ -49,7 +52,11 @@ public class SecurityConfiguration {
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
             ServletOutputStream out = response.getOutputStream();
-            new ObjectMapper().writeValue(out, new ResponseBody<>().setMessage("FORBIDDEN").setError(ex.getMessage()));
+
+            Response<Object> responseBody = Response.accessDenied();
+            responseBody.addErrorMsgToResponse("Access Denied", ex);
+
+            new ObjectMapper().writeValue(out, responseBody);
             out.flush();
         };
     }

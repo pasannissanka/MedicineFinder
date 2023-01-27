@@ -10,8 +10,9 @@ import com.medifinder.medifinder.Customer.CustomerService;
 import com.medifinder.medifinder.Pharma.Dto.CreatePharmaReqDto;
 import com.medifinder.medifinder.Pharma.Dto.PharmaDto;
 import com.medifinder.medifinder.Pharma.PharmaService;
-import com.medifinder.medifinder.Utils.Models.ResponseBody;
+import com.medifinder.medifinder.Utils.Dto.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,49 +33,32 @@ public class AuthController {
     private UserRepository userRepository;
 
     @GetMapping()
-    public ResponseBody<?> me(Authentication authentication) {
-        try {
-            UserDto user = userService.findUserByEmail(authentication.getName());
-            if (user.getRole().equals(Role.CUSTOMER)) {
-                CustomerDto customerDto = customerService.findCustomerUser(user.getId());
-                return new ResponseBody<CustomerDto>()
-                        .setMessage("SUCCESS")
-                        .setData(customerDto);
-            } else {
-                PharmaDto pharmaDto = pharmaService.findPharmaUser(user.getId());
-                return new ResponseBody<PharmaDto>()
-                        .setMessage("SUCCESS")
-                        .setData(pharmaDto);
-            }
-        } catch (Exception ex) {
-            return new ResponseBody<LoggedUserResponseDto>()
-                    .setMessage("ERROR")
-                    .setError(ex.getMessage());
+    public ResponseEntity<Response<?>> me(Authentication authentication) throws Exception {
+        UserDto user = userService.findUserByEmail(authentication.getName());
+        if (user.getRole().equals(Role.CUSTOMER)) {
+            CustomerDto customerDto = customerService.findCustomerUser(user.getId());
+            return ResponseEntity.ok().body(Response.ok(customerDto));
+        } else {
+            PharmaDto pharmaDto = pharmaService.findPharmaUser(user.getId());
+            return ResponseEntity.ok().body(Response.ok(pharmaDto));
         }
+
     }
 
     @PostMapping("/public/authenticate")
-    public ResponseBody<AuthenticatedResponse> authenticate(@RequestBody AuthenticatedRequest request) {
-        return new ResponseBody<AuthenticatedResponse>().setMessage("SUCCESS").setData(authenticationService.authenticate(request));
+    public ResponseEntity<Response<AuthenticatedResponse>> authenticate(@RequestBody AuthenticatedRequest request) {
+        return ResponseEntity.ok().body(Response.ok(authenticationService.authenticate(request)));
     }
 
     @PostMapping("/public/customer")
-    public ResponseBody<CustomerDto> createCustomer(@RequestBody CreateCustomerReqDto reqDto) {
-        try {
-            CustomerDto data = customerService.createCustomer(reqDto);
-            return new ResponseBody<CustomerDto>().setData(data).setMessage("SUCCESS");
-        } catch (Exception ex) {
-            return new ResponseBody<CustomerDto>().setError(ex.getMessage()).setMessage("ERROR");
-        }
+    public ResponseEntity<Response<CustomerDto>> createCustomer(@RequestBody CreateCustomerReqDto reqDto) throws Exception {
+        CustomerDto data = customerService.createCustomer(reqDto);
+        return ResponseEntity.ok().body(Response.ok(data));
     }
 
     @PostMapping("/public/pharma")
-    public ResponseBody<PharmaDto> createPharmaUser(@RequestBody CreatePharmaReqDto reqDto) {
-        try {
-            PharmaDto data = pharmaService.createPharmaUser(reqDto);
-            return new ResponseBody<PharmaDto>().setData(data).setMessage("SUCCESS");
-        } catch (Exception ex) {
-            return new ResponseBody<PharmaDto>().setError(ex.getMessage()).setMessage("ERROR");
-        }
+    public ResponseEntity<Response<PharmaDto>> createPharmaUser(@RequestBody CreatePharmaReqDto reqDto) throws Exception {
+        PharmaDto data = pharmaService.createPharmaUser(reqDto);
+        return ResponseEntity.ok().body(Response.ok(data));
     }
 }

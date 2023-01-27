@@ -2,8 +2,9 @@ package com.medifinder.medifinder.Customer;
 
 import com.medifinder.medifinder.Customer.Dto.CreateCustomerReqDto;
 import com.medifinder.medifinder.Customer.Dto.CustomerDto;
-import com.medifinder.medifinder.Utils.Models.ResponseBody;
+import com.medifinder.medifinder.Utils.Dto.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,12 +17,8 @@ public class CustomerController {
     private CustomerService customerService;
 
     @PostMapping()
-    public ResponseBody<CustomerDto> createCustomer(@RequestBody CreateCustomerReqDto reqDto) {
-        try {
-            CustomerDto data = customerService.createCustomer(reqDto);
-            return new ResponseBody<CustomerDto>().setData(data).setMessage("SUCCESS");
-        } catch (Exception ex) {
-            return new ResponseBody<CustomerDto>().setError(ex.getMessage()).setMessage("ERROR");
-        }
+    public ResponseEntity<Response<CustomerDto>> createCustomer(@RequestBody CreateCustomerReqDto reqDto) throws Exception {
+        CustomerDto data = customerService.createCustomer(reqDto);
+        return ResponseEntity.ok().body(Response.ok(data));
     }
 }

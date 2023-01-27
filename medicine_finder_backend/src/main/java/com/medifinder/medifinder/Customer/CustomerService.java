@@ -9,6 +9,7 @@ import com.medifinder.medifinder.Customer.Model.Customer;
 import com.medifinder.medifinder.Customer.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,10 +29,10 @@ public class CustomerService {
     private final PasswordEncoder passwordEncoder;
 
     public CustomerDto createCustomer(CreateCustomerReqDto customerReqDto) throws Exception {
-        Optional<User> existingUser = userRepository.findByEmail((customerReqDto.getEmail()));
+        Optional<User> existingUser = userRepository.findByEmail(customerReqDto.getEmail().toLowerCase());
 
         if (existingUser.isPresent()) {
-            throw new Exception("Email already taken");
+            throw new DuplicateKeyException("Email already taken");
         }
 
         User newUser = userRepository.save(
