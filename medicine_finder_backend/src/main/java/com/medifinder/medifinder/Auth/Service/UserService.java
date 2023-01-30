@@ -4,12 +4,14 @@ import com.medifinder.medifinder.Auth.Dto.CreateNewUserReqBody;
 import com.medifinder.medifinder.Auth.Dto.UserDto;
 import com.medifinder.medifinder.Auth.Model.User;
 import com.medifinder.medifinder.Auth.UserRepository;
+import com.medifinder.medifinder.Utils.Service.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -20,17 +22,20 @@ public class UserService {
 
     @Autowired
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
 
-    public UserDto createNewUser(CreateNewUserReqBody data) throws Exception {
+    public User createNewUser(CreateNewUserReqBody data) throws Exception {
         Optional<User> user = userRepository.findByEmail(data.getEmail());
 
         if (user.isPresent())
             throw new Exception("Email already taken");
 
+
         User newUser = new User(data.getEmail(), passwordEncoder.encode(data.getPassword()), data.getRole());
         userRepository.save(newUser);
 
-        return new UserDto().toUserDto(newUser);
+        emailService.sendVerifyEmail(newUser.getEmail(), newUser.getUsername(), newUser.getEmailVerificationToken());
+        return newUser;
     }
 
     public UserDto findUserByEmail(String email) throws Exception {
@@ -38,5 +43,13 @@ public class UserService {
         if (user.isEmpty())
             throw new Exception("User not found");
         return new UserDto().toUserDto(user.get());
+    }
+
+    public boolean verifyEmail(String token) throws Exception {
+        Optional<User> user = userRepository.findByEmailVerificationToken(token);
+        if (user.isEmpty())
+            throw new Exception("token not found");
+        int rowsAffected = userRepository.updateVerifiedAndEmailVerificationTokenById(true, user.get().getId());
+        return rowsAffected == 1;
     }
 }

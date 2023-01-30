@@ -11,6 +11,7 @@ import com.medifinder.medifinder.Pharma.Dto.CreatePharmaReqDto;
 import com.medifinder.medifinder.Pharma.Dto.PharmaDto;
 import com.medifinder.medifinder.Pharma.PharmaService;
 import com.medifinder.medifinder.Utils.Dto.Response;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -18,19 +19,18 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
+@AllArgsConstructor
 public class AuthController {
 
     @Autowired
-    private UserService userService;
+    private final UserService userService;
     @Autowired
-    private CustomerService customerService;
+    private final CustomerService customerService;
     @Autowired
-    private PharmaService pharmaService;
+    private final PharmaService pharmaService;
 
     @Autowired
-    private AuthenticationService authenticationService;
-    @Autowired
-    private UserRepository userRepository;
+    private final AuthenticationService authenticationService;
 
     @GetMapping()
     public ResponseEntity<Response<?>> me(Authentication authentication) throws Exception {
@@ -60,5 +60,11 @@ public class AuthController {
     public ResponseEntity<Response<PharmaDto>> createPharmaUser(@RequestBody CreatePharmaReqDto reqDto) throws Exception {
         PharmaDto data = pharmaService.createPharmaUser(reqDto);
         return ResponseEntity.ok().body(Response.ok(data));
+    }
+
+    @PostMapping("/public/verify")
+    public ResponseEntity<Response<Boolean>> verifyEmail(@RequestParam String token) throws Exception {
+        Boolean updated = userService.verifyEmail(token);
+        return ResponseEntity.ok().body(Response.ok(updated));
     }
 }

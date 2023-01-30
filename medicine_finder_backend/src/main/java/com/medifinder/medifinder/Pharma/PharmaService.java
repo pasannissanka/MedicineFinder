@@ -1,14 +1,18 @@
 package com.medifinder.medifinder.Pharma;
 
+import com.medifinder.medifinder.Auth.Dto.CreateNewUserReqBody;
 import com.medifinder.medifinder.Auth.Model.Role;
 import com.medifinder.medifinder.Auth.Model.User;
+import com.medifinder.medifinder.Auth.Service.UserService;
 import com.medifinder.medifinder.Auth.UserRepository;
 import com.medifinder.medifinder.Pharma.Dto.CreatePharmaReqDto;
 import com.medifinder.medifinder.Pharma.Dto.PharmaDto;
 import com.medifinder.medifinder.Pharma.Models.Pharma;
 import com.medifinder.medifinder.Pharma.PharmaRepository;
+import com.medifinder.medifinder.Utils.Service.EmailService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +25,7 @@ public class PharmaService {
 
     @Autowired
     private final UserRepository userRepository;
+    private final UserService userService;
 
     @Autowired
     private final PharmaRepository pharmaRepository;
@@ -28,18 +33,17 @@ public class PharmaService {
     @Autowired
     private final PasswordEncoder passwordEncoder;
 
+
     public PharmaDto createPharmaUser(CreatePharmaReqDto reqDto) throws Exception {
         Optional<User> existingUser = userRepository.findByEmail((reqDto.getEmail()));
         if (existingUser.isPresent()) {
             throw new Exception("Email already taken");
         }
-        User newUser = userRepository.save(
-                new User(
-                        reqDto.getEmail().toLowerCase(),
-                        passwordEncoder.encode(reqDto.getPassword()),
-                        Role.PHARMA
-                )
-        );
+        User newUser = userService.createNewUser(CreateNewUserReqBody.builder()
+                .email(reqDto.getEmail())
+                .password(reqDto.getPassword())
+                .role(Role.PHARMA)
+                .build());
         Pharma newPharma = pharmaRepository.save(
                 new Pharma()
                         .setDetails(reqDto.getDetails())

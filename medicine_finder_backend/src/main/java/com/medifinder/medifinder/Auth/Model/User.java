@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @Entity
@@ -29,11 +30,16 @@ public class User implements UserDetails {
     private Role role;
     private Boolean verified;
 
+    @Column(nullable = true)
+    private String emailVerificationToken;
+
+
     public User(String email, String password, Role role) {
         this.email = email;
         this.role = role;
         this.password = password;
         this.verified = false;
+        this.emailVerificationToken = UUID.randomUUID().toString();
     }
 
     @Override

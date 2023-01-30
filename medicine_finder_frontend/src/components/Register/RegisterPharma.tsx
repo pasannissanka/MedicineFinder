@@ -12,6 +12,7 @@ const SignupSchema = Yup.object().shape({
     [Yup.ref("password"), null],
     "Passwords must match"
   ),
+  name: Yup.string().optional(),
   address: Yup.string().optional(),
   details: Yup.string().optional(),
 });
@@ -32,6 +33,7 @@ export const RegisterPharma = () => {
           email: "",
           password: "",
           retype_password: "",
+          name: ""
         }}
         onSubmit={async (values) => {
           if (values.password === values.retype_password) {
@@ -41,6 +43,7 @@ export const RegisterPharma = () => {
                 details: values.details,
                 email: values.email,
                 password: values.password,
+                name: values.name
               });
               navigate("/auth")
             } catch (error) {
@@ -49,7 +52,7 @@ export const RegisterPharma = () => {
           }
         }}
       >
-        {({}) => (
+        {({ }) => (
           <>
             <Form className="my-4 px-4 w-full">
               <div className="flex flex-col gap-2 border-b pb-2">

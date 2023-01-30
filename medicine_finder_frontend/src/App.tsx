@@ -6,6 +6,7 @@ import ProtectedLayout from "./components/Protected/ProtectedLayout";
 import Register from "./components/Register";
 import { AuthProvider } from "./context/AuthContext";
 import AuthPage from "./pages/Auth/Auth";
+import ConfirmPage from "./pages/Auth/Confirm";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import NotFoundPage from "./pages/Error/NotFoundPage";
 import { USER_TYPES } from "./utils/enum";
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <Login />,
+      },
+      {
+        path: "confirm",
+        element: <ConfirmPage />
       },
       {
         path: "register/customer",

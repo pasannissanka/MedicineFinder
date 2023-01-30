@@ -20,3 +20,11 @@ export const meAPI = async () => {
   >("/auth");
   return response.data;
 };
+
+export const verifyAccountApi = async (payload: { token: string }) => {
+  const response = await AxiosClient.post<ResponseBody<boolean>>(
+    `/auth/public/verify?token=${payload.token}`,
+    {}
+  );
+  return response.data;
+};

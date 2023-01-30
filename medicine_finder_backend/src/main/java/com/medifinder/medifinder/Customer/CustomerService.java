@@ -1,7 +1,9 @@
 package com.medifinder.medifinder.Customer;
 
+import com.medifinder.medifinder.Auth.Dto.CreateNewUserReqBody;
 import com.medifinder.medifinder.Auth.Model.Role;
 import com.medifinder.medifinder.Auth.Model.User;
+import com.medifinder.medifinder.Auth.Service.UserService;
 import com.medifinder.medifinder.Auth.UserRepository;
 import com.medifinder.medifinder.Customer.Dto.CreateCustomerReqDto;
 import com.medifinder.medifinder.Customer.Dto.CustomerDto;
@@ -22,6 +24,7 @@ public class CustomerService {
 
     @Autowired
     private final CustomerRepository customerRepository;
+    private final UserService userService;
     @Autowired
     private final UserRepository userRepository;
 
@@ -35,13 +38,11 @@ public class CustomerService {
             throw new DuplicateKeyException("Email already taken");
         }
 
-        User newUser = userRepository.save(
-                new User(
-                        customerReqDto.getEmail().toLowerCase(),
-                        passwordEncoder.encode(customerReqDto.getPassword()),
-                        Role.CUSTOMER
-                )
-        );
+        User newUser = userService.createNewUser(CreateNewUserReqBody.builder()
+                .email(customerReqDto.getEmail())
+                .password(customerReqDto.getPassword())
+                .role(Role.CUSTOMER)
+                .build());
 
         Customer newCustomer = customerRepository.save(
                 new Customer()

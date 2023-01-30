@@ -54,4 +54,5 @@ export interface ICreatePharma {
   password: string;
   details: string;
   address: string;
+  name: string;
 }
