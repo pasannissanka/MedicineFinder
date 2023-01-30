@@ -24,6 +24,7 @@ public class Pharma {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
     private String details;
+    private String name;
     private String address;
     @OneToMany(mappedBy = "pharma")
     private Set<Product> products;

@@ -7,6 +7,7 @@ public class CreatePharmaReqDto {
 
     private String email;
     private String password;
+    private String name;
     private String details;
     private String address;
 }

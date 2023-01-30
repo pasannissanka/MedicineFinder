@@ -44,6 +44,7 @@ public class PharmaService {
                 new Pharma()
                         .setDetails(reqDto.getDetails())
                         .setUser(newUser)
+                        .setName(reqDto.getName())
                         .setAddress(reqDto.getAddress())
         );
         return new PharmaDto().toPharmaDto(newPharma);

@@ -1,10 +1,13 @@
 package com.medifinder.medifinder.Pharma.Dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.medifinder.medifinder.Auth.Dto.UserDto;
 import com.medifinder.medifinder.Pharma.Models.Pharma;
 import com.medifinder.medifinder.Pharma.PharmaRepository;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -19,7 +22,9 @@ public class PharmaDto {
     private UserDto user;
     private String details;
     private String address;
+    private String name;
 
+    @JsonIgnore
     @Autowired
     private PharmaRepository pharmaRepository;
 
@@ -28,6 +33,7 @@ public class PharmaDto {
                 .setId(data.getId())
                 .setUser(new UserDto().toUserDto(data.getUser()))
                 .setDetails(data.getDetails())
+                .setName(data.getName())
                 .setAddress(data.getAddress());
     }
 
