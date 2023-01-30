@@ -8,10 +8,13 @@ export type AuthContextData = {
 };
 
 export interface ResponseBody<T> {
+  status: string;
   message: string;
   data: T;
-  error: any;
+  errors?: any;
+  metadata?: any;
 }
+
 
 export interface IAuthenticatedUser {
   user: ICustomerUser | IPharmaUser;
@@ -36,6 +39,7 @@ export interface IPharmaUser {
   id: string;
   user: IAuthUser;
   details: string;
+  name: string;
 }
 
 export interface ICreateCustomer {
@@ -48,6 +52,6 @@ export interface ICreateCustomer {
 export interface ICreatePharma {
   email: string;
   password: string;
-  details: string
+  details: string;
   address: string;
 }

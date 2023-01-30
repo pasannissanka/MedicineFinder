@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const data = await meAPI();
       if (data && data.data) {
         setAuthenticatedUser({
-          user: data.data.data,
+          user: data.data,
           token,
         });
       }

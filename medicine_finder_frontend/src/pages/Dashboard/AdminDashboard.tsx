@@ -1,4 +1,5 @@
 import React from 'react'
+import CardWrapper from '../../components/Card/CardWrapper'
 import Navbar from '../../components/Navbar/Navbar'
 
 const AdminDashboard = () => {
@@ -6,7 +7,10 @@ const AdminDashboard = () => {
     <div>
         <Navbar />
         <div className='flex justify-center my-2'>
-            Content
+          <div className='w-1/2'>
+
+            <CardWrapper />
+          </div>
         </div>
     </div>
   )
