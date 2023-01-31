@@ -1,6 +1,7 @@
 package com.medifinder.medifinder.Product;
 
 import com.medifinder.medifinder.Pharma.Dto.PharmaDto;
+import com.medifinder.medifinder.Pharma.Models.Pharma;
 import com.medifinder.medifinder.Product.Dto.CreateProductReq;
 import com.medifinder.medifinder.Product.Dto.ProductDto;
 import com.medifinder.medifinder.Product.Model.Product;
@@ -22,11 +23,11 @@ public class ProductService {
         Product newProduct = productRepository.save(
                 Product.builder()
                         .price(productReq.getPrice())
-                        .isAvailable(productReq.isAvailable())
+                        .available(productReq.isAvailable())
                         .genericName(productReq.getGenericName())
                         .description(productReq.getDescription())
                         .brandName(productReq.getBrandName())
-                        .pharma(new PharmaDto().toPharma(loggedInUser))
+                        .pharma(new Pharma().setId(loggedInUser.getId()))
                         .build()
         );
         return new ProductDto().toProductDto(newProduct);

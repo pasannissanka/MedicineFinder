@@ -8,6 +8,6 @@ public class CreateProductReq {
     private String brandName;
     private String genericName;
     private double price;
-    private boolean isAvailable;
+    private boolean available;
     private String description;
 }

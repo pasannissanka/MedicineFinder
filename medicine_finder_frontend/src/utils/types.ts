@@ -56,3 +56,13 @@ export interface ICreatePharma {
   address: string;
   name: string;
 }
+
+export interface IProduct {
+  id: string;
+  brandName: string;
+  genericName: string;
+  price: string;
+  available: boolean;
+  description: string;
+  pharma?: IPharmaUser;
+}

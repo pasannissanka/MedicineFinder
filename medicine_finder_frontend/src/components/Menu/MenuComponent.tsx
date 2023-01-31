@@ -5,9 +5,16 @@ type MenuComponentProps = {
   type: "Button" | "Rounded";
   trigger: React.ReactNode;
   children: React.ReactNode;
+  size?: "lg" | "md" | "sm";
 };
 
-const MenuComponent = ({ type, trigger, children }: MenuComponentProps) => {
+const MenuComponent = ({
+  type,
+  trigger,
+  children,
+  size = "lg",
+}: MenuComponentProps) => {
+  const w = size === "lg" ? "w-56" : size === "md" ? "w-36" : "w-24";
   return (
     <Menu as="div" className="relative inline-block text-left">
       <Menu.Button
@@ -30,8 +37,10 @@ const MenuComponent = ({ type, trigger, children }: MenuComponentProps) => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-          <div className="px-1 py-1 ">{children}</div>
+        <Menu.Items
+          className={`z-10 absolute right-0 ${w} origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
+        >
+          <div className="px-1 py-1">{children}</div>
         </Menu.Items>
       </Transition>
     </Menu>

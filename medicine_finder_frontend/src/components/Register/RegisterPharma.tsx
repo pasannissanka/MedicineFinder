@@ -67,6 +67,11 @@ export const RegisterPharma = () => {
                   name="retype_password"
                   placeholder="Retype Password"
                 />
+                <FormField
+                  type="text"
+                  name="name"
+                  placeholder="Name of the company"
+                />
                 <FormField type="text" name="address" placeholder="Address" />
                 <FormField
                   type="text"

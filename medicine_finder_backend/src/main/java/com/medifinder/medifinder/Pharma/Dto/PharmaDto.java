@@ -24,10 +24,6 @@ public class PharmaDto {
     private String address;
     private String name;
 
-    @JsonIgnore
-    @Autowired
-    private PharmaRepository pharmaRepository;
-
     public PharmaDto toPharmaDto(Pharma data) {
         return new PharmaDto()
                 .setId(data.getId())
@@ -37,10 +33,4 @@ public class PharmaDto {
                 .setAddress(data.getAddress());
     }
 
-    public Pharma toPharma(PharmaDto pharmaDto) throws Exception {
-        Optional<Pharma> pharma = pharmaRepository.findById(pharmaDto.getId());
-        if (pharma.isEmpty())
-            throw new Exception("Not found");
-        return pharma.get();
-    }
 }

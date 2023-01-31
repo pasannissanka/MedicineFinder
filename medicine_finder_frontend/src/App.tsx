@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { meAPI } from "./api/login.api";
 import Login from "./components/Login/Login";
@@ -18,8 +18,8 @@ const router = createBrowserRouter([
     errorElement: <NotFoundPage />,
     loader: async () => {
       try {
-        const data =  await meAPI();
-        return data
+        const data = await meAPI();
+        return data;
       } catch (error) {
         return null;
       }
@@ -41,7 +41,7 @@ const router = createBrowserRouter([
       },
       {
         path: "confirm",
-        element: <ConfirmPage />
+        element: <ConfirmPage />,
       },
       {
         path: "register/customer",
@@ -55,11 +55,15 @@ const router = createBrowserRouter([
   },
 ]);
 
+const queryClient = new QueryClient();
+
 function App() {
   return (
     <div className="flex justify-center">
       <AuthProvider>
-        <RouterProvider router={router} />
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+        </QueryClientProvider>
       </AuthProvider>
     </div>
   );

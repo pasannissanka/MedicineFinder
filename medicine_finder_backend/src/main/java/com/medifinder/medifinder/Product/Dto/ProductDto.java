@@ -1,5 +1,6 @@
 package com.medifinder.medifinder.Product.Dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.medifinder.medifinder.Pharma.Dto.PharmaDto;
 import com.medifinder.medifinder.Product.Model.Product;
 import lombok.AllArgsConstructor;
@@ -17,9 +18,9 @@ public class ProductDto {
     private String brandName;
     private String genericName;
     private double price;
-    private boolean isAvailable;
+    private boolean available;
     private String description;
-    private PharmaDto pharma;
+    private String pharma_id;
 
     public ProductDto toProductDto(Product product) {
         return ProductDto.builder()
@@ -28,8 +29,13 @@ public class ProductDto {
                 .brandName(product.getBrandName())
                 .genericName(product.getGenericName())
                 .price(product.getPrice())
-                .isAvailable(product.isAvailable())
-                .pharma(new PharmaDto().toPharmaDto(product.getPharma()))
+                .available(product.isAvailable())
+                .pharma_id(product.getPharma().getId())
                 .build();
+    }
+
+    @JsonProperty("isAvailable")
+    public boolean isAvailable() {
+        return available;
     }
 }

@@ -25,7 +25,7 @@ public class Product {
     private String brandName;
     private String genericName;
     private double price;
-    private boolean isAvailable;
+    private boolean available;
     private String description;
     @ManyToOne
     @JoinColumn(name = "pharma_id", nullable = true)

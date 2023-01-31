@@ -25,6 +25,7 @@ public class PharmaService {
 
     @Autowired
     private final UserRepository userRepository;
+    @Autowired
     private final UserService userService;
 
     @Autowired
