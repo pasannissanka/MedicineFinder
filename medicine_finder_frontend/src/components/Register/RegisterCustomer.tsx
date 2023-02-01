@@ -57,15 +57,36 @@ export const RegisterCustomer = () => {
       >
         {() => (
           <Form className="my-4 px-4 flex flex-col gap-3 w-full ">
-            <FormField name="email" placeholder="Email" type="email" />
-            <FormField name="password" placeholder="Password" type="password" />
+            <FormField
+              name="email"
+              placeholder="Email"
+              type="email"
+              title="Email"
+            />
+            <FormField
+              name="password"
+              placeholder="Password"
+              type="password"
+              title="Password"
+            />
             <FormField
               name="retypePassword"
               placeholder="Retype Password"
               type="password"
+              title="Retype Password"
             />
-            <FormField type="text" name="firstName" placeholder="First Name" />
-            <FormField type="text" name="lastName" placeholder="Last Name" />
+            <FormField
+              type="text"
+              name="firstName"
+              placeholder="First Name"
+              title="First Name"
+            />
+            <FormField
+              type="text"
+              name="lastName"
+              placeholder="Last Name"
+              title="Last Name"
+            />
             <div className="flex justify-between items-center">
               <span className="text-sm">
                 Already have an account?

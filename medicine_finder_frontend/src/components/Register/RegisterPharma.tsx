@@ -33,7 +33,7 @@ export const RegisterPharma = () => {
           email: "",
           password: "",
           retype_password: "",
-          name: ""
+          name: "",
         }}
         onSubmit={async (values) => {
           if (values.password === values.retype_password) {
@@ -43,40 +43,54 @@ export const RegisterPharma = () => {
                 details: values.details,
                 email: values.email,
                 password: values.password,
-                name: values.name
+                name: values.name,
               });
-              navigate("/auth")
+              navigate("/auth");
             } catch (error) {
               // TODO error handling
             }
           }
         }}
       >
-        {({ }) => (
+        {({}) => (
           <>
             <Form className="my-4 px-4 w-full">
-              <div className="flex flex-col gap-2 border-b pb-2">
-                <FormField type="email" name="email" placeholder="Email" />
+              <div className="flex flex-col border-b pb-2">
+                <FormField
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  title="Email"
+                />
                 <FormField
                   type="password"
                   name="password"
                   placeholder="Password"
+                  title="Password"
                 />
                 <FormField
                   type="password"
                   name="retype_password"
                   placeholder="Retype Password"
+                  title="Retype Password"
                 />
                 <FormField
                   type="text"
                   name="name"
                   placeholder="Name of the company"
+                  title="Name of the company"
                 />
-                <FormField type="text" name="address" placeholder="Address" />
+                <FormField
+                  type="text"
+                  name="address"
+                  placeholder="Address"
+                  title="Address"
+                />
                 <FormField
                   type="text"
                   name="details"
                   placeholder="Additional Details"
+                  title="Additional Details"
                 />
                 <div className="flex  justify-between items-center">
                   <span className="text-sm">

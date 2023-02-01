@@ -46,8 +46,18 @@ const Login = () => {
       >
         {() => (
           <Form className="my-4 px-4 flex flex-col gap-2 w-full ">
-            <FormField type="email" name="email" placeholder="Email" />
-            <FormField type="password" name="password" placeholder="Password" />
+            <FormField
+              type="email"
+              name="email"
+              placeholder="Email"
+              title="Email"
+            />
+            <FormField
+              type="password"
+              name="password"
+              placeholder="Password"
+              title="Password"
+            />
             <div className="flex justify-between items-center">
               <span className="text-sm">
                 Customer:

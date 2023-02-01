@@ -103,17 +103,17 @@ public class GlobalExceptionHandler {
                 .body(response);
     }
 
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<Response<Object>> handleInternalServerError(HttpServletRequest request, Exception ex) {
-////        logger.error("handleInternalServerError {}\n", request.getRequestURI(), ex);
-//
-//        Response<Object> response = Response.exception();
-//        response.addErrorMsgToResponse("Internal server error", List.of(ex.getMessage()));
-//
-//        return ResponseEntity
-//                .badRequest()
-//                .body(response);
-//    }
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Response<Object>> handleInternalServerError(HttpServletRequest request, Exception ex) {
+//        logger.error("handleInternalServerError {}\n", request.getRequestURI(), ex);
+
+        Response<Object> response = Response.exception();
+        response.addErrorMsgToResponse("Internal server error", List.of(ex.getMessage()));
+
+        return ResponseEntity
+                .badRequest()
+                .body(response);
+    }
 
     @ExceptionHandler(value = {DuplicateKeyException.class})
     public ResponseEntity<Response<Object>> handleValidationErrors(HttpServletRequest request, Exception ex) {

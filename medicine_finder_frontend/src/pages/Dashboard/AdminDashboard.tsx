@@ -1,14 +1,22 @@
 import { Menu } from "@headlessui/react";
-import React, { useContext, useEffect } from "react";
-import { useQuery } from "react-query";
+import React, { useContext, useEffect, useState } from "react";
+import { useQuery, useMutation } from "react-query";
 import { CellProps } from "react-table";
-import { fetchPharmaProducts } from "../../api/product.api";
+import {
+  createProduct,
+  deleteProduct,
+  fetchPharmaProducts,
+  updateProduct,
+} from "../../api/product.api";
+import Button from "../../components/Button/Button";
 import CardWrapper from "../../components/Card/CardWrapper";
 import MenuComponent from "../../components/Menu/MenuComponent";
+import Modal from "../../components/Modal/Modal";
 import Navbar from "../../components/Navbar/Navbar";
+import AddProduct from "../../components/Product/AddProduct";
 import Table from "../../components/Table/Table";
 import { AuthContext } from "../../context/AuthContext";
-import { IProduct } from "../../utils/types";
+import { IProduct, IProductAdd } from "../../utils/types";
 
 const AdminDashboard = () => {
   const columns = React.useMemo(
@@ -36,14 +44,24 @@ const AdminDashboard = () => {
       {
         Header: "Availability",
         accessor: "available",
+        Cell: ({ row: { original } }: CellProps<any>) => {
+          return <div>{original.available ? "Yes" : "No"}</div>;
+        },
       },
       {
         Header: "Action",
         accessor: "action",
         Cell: ({ row: { id, original, index, values } }: CellProps<any>) => {
-          const onItemClick = (value: any) => {
-            console.log("value", value);
-            // updateMyData(index, id, value)
+          const onEditClick = (value: IProduct) => {
+            setEditData(value);
+            setIsAddOpen({
+              status: true,
+              type: "EDIT",
+            });
+          };
+
+          const onDeleteClick = (value: IProduct) => {
+            handleDelete(value.id);
           };
           return (
             <MenuComponent
@@ -70,6 +88,7 @@ const AdminDashboard = () => {
                 <Menu.Item>
                   {({ active }) => (
                     <button
+                      onClick={() => onEditClick(original)}
                       className={`${
                         active ? "bg-violet-500 text-white" : "text-gray-900"
                       } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
@@ -81,6 +100,7 @@ const AdminDashboard = () => {
                 <Menu.Item>
                   {({ active }) => (
                     <button
+                      onClick={() => onDeleteClick(original)}
                       className={`${
                         active ? "bg-violet-500 text-white" : "text-gray-900"
                       } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
@@ -100,10 +120,22 @@ const AdminDashboard = () => {
 
   const { authenticatedUser } = useContext(AuthContext);
 
-  const { data } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: ["pharma-products", { id: authenticatedUser?.user.id }],
     queryFn: fetchPharmaProducts,
     enabled: !!authenticatedUser?.user.id,
+  });
+
+  const productAddMutation = useMutation({
+    mutationFn: createProduct,
+  });
+
+  const productEditMutation = useMutation({
+    mutationFn: updateProduct,
+  });
+
+  const productDeleteMutation = useMutation({
+    mutationFn: deleteProduct,
   });
 
   const dataM = React.useMemo(() => {
@@ -113,7 +145,7 @@ const AdminDashboard = () => {
           ...d,
           id: d.id,
           index: idx + 1,
-          available: d.available ? "Yes" : "No",
+          // available: d.available ? "Yes" : "No",
         };
       });
     } else {
@@ -121,14 +153,79 @@ const AdminDashboard = () => {
     }
   }, [data]);
 
-  console.log(data);
+  const [isAddOpen, setIsAddOpen] = useState<{
+    status: boolean;
+    type?: "ADD" | "EDIT";
+  }>({
+    status: false,
+  });
+  const [editData, setEditData] = useState<IProduct>();
+
+  const onAddEditModalSubmit = (value: IProductAdd & { id: string }) => {
+    if (isAddOpen.type === "ADD") {
+      productAddMutation.mutateAsync(value).then(() => {
+        refetch();
+      });
+      setIsAddOpen({
+        status: false,
+      });
+    } else {
+      productEditMutation
+        .mutateAsync({
+          data: value,
+          id: value.id,
+        })
+        .then(() => {
+          refetch();
+          setIsAddOpen({
+            status: false,
+          });
+        });
+    }
+  };
+
+  const handleDelete = (id: string) => {
+    productDeleteMutation.mutateAsync(id).then(() => {
+      refetch();
+    });
+  };
 
   return (
     <div>
       <Navbar />
       <div className="min-h-screen flex flex-col items-center justify-center mx-10">
+        <div className="w-full flex justify-end">
+          <Button
+            onClick={() => {
+              setEditData(undefined);
+              setIsAddOpen({
+                status: true,
+                type: "ADD",
+              });
+            }}
+          >
+            Add
+          </Button>
+        </div>
         <Table columns={columns} data={dataM} />
       </div>
+      <Modal
+        title="Add Product"
+        isOpen={isAddOpen.status}
+        setIsOpen={setIsAddOpen}
+      >
+        <div>
+          <AddProduct
+            data={editData}
+            onClose={() => {
+              setIsAddOpen({
+                status: false,
+              });
+            }}
+            onSubmit={onAddEditModalSubmit}
+          />
+        </div>
+      </Modal>
     </div>
   );
 };

@@ -4,6 +4,7 @@ import com.medifinder.medifinder.Pharma.Dto.PharmaDto;
 import com.medifinder.medifinder.Pharma.Models.Pharma;
 import com.medifinder.medifinder.Product.Dto.CreateProductReq;
 import com.medifinder.medifinder.Product.Dto.ProductDto;
+import com.medifinder.medifinder.Product.Dto.UpdateProductReq;
 import com.medifinder.medifinder.Product.Model.Product;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,5 +49,26 @@ public class ProductService {
     public List<ProductDto> findAllPharmaProducts(PharmaDto loggedInUser) {
         List<Product> products = productRepository.findAllByPharma_Id(loggedInUser.getId());
         return products.stream().map(product -> new ProductDto().toProductDto(product)).toList();
+    }
+
+    public ProductDto updateProductById(String id, UpdateProductReq body) throws Exception {
+        Optional<Product> foundProduct = productRepository.findById(id);
+        if (foundProduct.isEmpty())
+            throw new Exception("Product not found");
+
+        Product product = foundProduct.get();
+
+        product.setAvailable(body.isAvailable());
+        product.setPrice(body.getPrice());
+        product.setDescription(body.getDescription());
+        product.setBrandName(body.getBrandName());
+        product.setGenericName(body.getGenericName());
+
+        return new ProductDto().toProductDto(productRepository.save(product));
+    }
+
+    public boolean deleteProduct(String id) {
+        productRepository.deleteById(id);
+        return true;
     }
 }

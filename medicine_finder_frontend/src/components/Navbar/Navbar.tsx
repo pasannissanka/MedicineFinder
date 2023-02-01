@@ -81,7 +81,7 @@ const Navbar = () => {
         )}
       </div>
       {!authenticatedUser?.user.user.verified && (
-        <div className="absolute z-50 top-12 left-0 right-0 w-full h-16 bg-red-500 shadow-md text-white">
+        <div className="absolute z-20 top-12 left-0 right-0 w-full h-16 bg-red-500 shadow-md text-white">
           <div className="flex justify-center items-center h-full gap-4">
             <span>
               <svg

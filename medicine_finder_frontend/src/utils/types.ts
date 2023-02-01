@@ -15,7 +15,6 @@ export interface ResponseBody<T> {
   metadata?: any;
 }
 
-
 export interface IAuthenticatedUser {
   user: ICustomerUser | IPharmaUser;
   token: string;
@@ -65,4 +64,12 @@ export interface IProduct {
   available: boolean;
   description: string;
   pharma?: IPharmaUser;
+}
+
+export interface IProductAdd {
+  brandName: string;
+  genericName: string;
+  price: string;
+  available: boolean;
+  description: string;
 }

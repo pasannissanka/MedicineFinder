@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -64,7 +65,11 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()).and()
+                .cors().configurationSource(request -> {
+                    CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
+                    configuration.addAllowedMethod(HttpMethod.DELETE);
+                    return configuration;
+                }).and()
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()

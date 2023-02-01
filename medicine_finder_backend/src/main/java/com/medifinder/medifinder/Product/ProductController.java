@@ -5,6 +5,7 @@ import com.medifinder.medifinder.Pharma.Dto.PharmaDto;
 import com.medifinder.medifinder.Pharma.PharmaService;
 import com.medifinder.medifinder.Product.Dto.CreateProductReq;
 import com.medifinder.medifinder.Product.Dto.ProductDto;
+import com.medifinder.medifinder.Product.Dto.UpdateProductReq;
 import com.medifinder.medifinder.Utils.Dto.Response;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,18 @@ public class ProductController {
     public ResponseEntity<Response<ProductDto>> getProductById(@PathVariable String id) throws Exception {
         ProductDto productDto = productService.findProductById(id);
         return ResponseEntity.ok().body(Response.ok(productDto));
+    }
+
+    @PostMapping("/{id}")
+    public ResponseEntity<Response<ProductDto>> updateProduct(@PathVariable String id, @RequestBody UpdateProductReq req) throws Exception {
+        ProductDto productDto = productService.updateProductById(id, req);
+        return ResponseEntity.ok().body(Response.ok(productDto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Response<Boolean>> deleteProduct(@PathVariable String id) throws Exception {
+        boolean deleted = productService.deleteProduct(id);
+        return ResponseEntity.ok().body(Response.ok(deleted));
     }
 
     @GetMapping("/pharma/{id}")

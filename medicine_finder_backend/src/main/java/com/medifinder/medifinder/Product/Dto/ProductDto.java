@@ -34,7 +34,7 @@ public class ProductDto {
                 .build();
     }
 
-    @JsonProperty("isAvailable")
+    @JsonProperty("available")
     public boolean isAvailable() {
         return available;
     }

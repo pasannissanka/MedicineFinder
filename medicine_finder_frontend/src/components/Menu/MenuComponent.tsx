@@ -38,7 +38,7 @@ const MenuComponent = ({
         leaveTo="transform opacity-0 scale-95"
       >
         <Menu.Items
-          className={`z-10 absolute right-0 ${w} origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
+          className={`z-40 absolute right-0 ${w} origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
         >
           <div className="px-1 py-1">{children}</div>
         </Menu.Items>
