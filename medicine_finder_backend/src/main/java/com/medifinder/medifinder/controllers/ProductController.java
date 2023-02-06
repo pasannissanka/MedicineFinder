@@ -41,9 +41,11 @@ public class ProductController {
     public ResponseEntity<Response<List<ProductDto>>> search(
             @RequestParam(name = "brand_name") @Nullable String brand_name,
             @RequestParam(name = "generic_name") @Nullable String generic_name,
-            @RequestParam(name = "availability") @Nullable Boolean available
+            @RequestParam(name = "available") @Nullable Boolean available,
+            @RequestParam(name = "price_low") @Nullable Double priceLow,
+            @RequestParam(name = "price_high") @Nullable Double priceHigh
     ) {
-        List<ProductDto> products = productService.searchProducts(brand_name, generic_name);
+        List<ProductDto> products = productService.searchProducts(brand_name, generic_name, available, priceLow, priceHigh);
         return ResponseEntity.ok().body(Response.ok(products));
     }
 
@@ -60,19 +62,8 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Response<Boolean>> deleteProduct(@PathVariable String id) throws Exception {
+    public ResponseEntity<Response<Boolean>> deleteProduct(@PathVariable String id) {
         boolean deleted = productService.deleteProduct(id);
         return ResponseEntity.ok().body(Response.ok(deleted));
     }
-
-//    @GetMapping("/search")
-//    public ResponseEntity<Response<List<ProductDto>>> searchProductByNames(@RequestParam(name = "name") String name) {
-//        List<ProductDto> productDtos = productService.findProductsByName(name);
-//        return ResponseEntity.ok().body(Response.ok(productDtos));
-//    }
-//
-//    @GetMapping("/text_search")
-//    public ResponseEntity<Response<List<String >>> searchByBrandName(@RequestParam(name = "brand_name")) {
-//
-//    }
 }

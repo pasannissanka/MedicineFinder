@@ -52,13 +52,13 @@ public class AuthController {
         return ResponseEntity.ok().body(Response.ok(authenticationService.authenticate(request)));
     }
 
-    @PostMapping("/public/customer")
+    @PostMapping("/public/customers")
     public ResponseEntity<Response<CustomerDto>> createCustomer(@RequestBody CreateCustomerReqDto reqDto) throws Exception {
         CustomerDto data = customerService.createCustomer(reqDto);
         return ResponseEntity.ok().body(Response.ok(data));
     }
 
-    @PostMapping("/public/pharma")
+    @PostMapping("/public/pharmas")
     public ResponseEntity<Response<PharmaDto>> createPharmaUser(@RequestBody CreatePharmaReqDto reqDto) throws Exception {
         PharmaDto data = pharmaService.createPharmaUser(reqDto);
         return ResponseEntity.ok().body(Response.ok(data));

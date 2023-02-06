@@ -9,6 +9,7 @@ import com.medifinder.medifinder.entities.Product;
 import com.medifinder.medifinder.repositories.ProductRepository;
 import com.medifinder.medifinder.services.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
+    @Autowired
     private final ProductRepository productRepository;
 
     public ProductDto createProduct(PharmaDto loggedInUser, CreateProductReq productReq) throws Exception {
@@ -40,8 +42,8 @@ public class ProductServiceImpl implements ProductService {
         return new ProductDto().toProductDto(product.get());
     }
 
-    public List<ProductDto> searchProducts(String brandName, String genericName) {
-        List<Product> products = productRepository.searchProducts(brandName, genericName);
+    public List<ProductDto> searchProducts(String brandName, String genericName, Boolean available, Double priceLow, Double priceHigh) {
+        List<Product> products = productRepository.searchProducts(brandName, genericName, available, priceLow, priceHigh);
         return products.stream().map(product -> new ProductDto().toProductDto(product)).toList();
     }
 

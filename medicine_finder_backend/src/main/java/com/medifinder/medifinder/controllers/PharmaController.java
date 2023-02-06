@@ -48,6 +48,4 @@ public class PharmaController {
         List<ProductDto> products = productService.findAllPharmaProducts(pharmaDto);
         return ResponseEntity.ok().body(Response.ok(products));
     }
-
-
 }

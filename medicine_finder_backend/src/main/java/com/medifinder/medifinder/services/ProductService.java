@@ -15,7 +15,13 @@ public interface ProductService {
 
     ProductDto findProductById(String id) throws Exception;
 
-    List<ProductDto> searchProducts(String brandName, String genericName);
+    List<ProductDto> searchProducts(
+            String brandName,
+            String genericName,
+            Boolean available,
+            Double priceLow,
+            Double priceHigh
+    );
 
     List<ProductDto> findAllPharmaProducts(PharmaDto loggedInUser);
 
