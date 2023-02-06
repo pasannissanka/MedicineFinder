@@ -1,75 +1,27 @@
 package com.medifinder.medifinder.services;
 
 import com.medifinder.medifinder.dto.PharmaDto;
-import com.medifinder.medifinder.repositories.ProductRepository;
-import com.medifinder.medifinder.entities.Pharma;
 import com.medifinder.medifinder.dto.requests.CreateProductReq;
 import com.medifinder.medifinder.dto.ProductDto;
 import com.medifinder.medifinder.dto.requests.UpdateProductReq;
-import com.medifinder.medifinder.entities.Product;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+
 
 import java.util.List;
-import java.util.Optional;
 
-@Service
-@AllArgsConstructor
-public class ProductService {
 
-    @Autowired
-    private final ProductRepository productRepository;
+public interface ProductService {
 
-    public ProductDto createProduct(PharmaDto loggedInUser, CreateProductReq productReq) throws Exception {
-        Product newProduct = productRepository.save(
-                Product.builder()
-                        .price(productReq.getPrice())
-                        .available(productReq.isAvailable())
-                        .genericName(productReq.getGenericName())
-                        .description(productReq.getDescription())
-                        .brandName(productReq.getBrandName())
-                        .pharma(Pharma.builder().id(loggedInUser.getId()).build())
-                        .build()
-        );
-        return new ProductDto().toProductDto(newProduct);
-    }
+    ProductDto createProduct(PharmaDto loggedInUser, CreateProductReq productReq) throws Exception;
 
-    public ProductDto findProductById(String id) throws Exception {
-        Optional<Product> product = productRepository.findById(id);
-        if (product.isEmpty())
-            throw new Exception("Not found");
-        return new ProductDto().toProductDto(product.get());
-    }
+    ProductDto findProductById(String id) throws Exception;
 
-    public List<ProductDto> searchProducts(String brandName, String genericName) {
-        List<Product> products = productRepository.searchProducts(brandName, genericName);
-        return products.stream().map(product -> new ProductDto().toProductDto(product)).toList();
-    }
+    List<ProductDto> searchProducts(String brandName, String genericName);
 
-    public List<ProductDto> findAllPharmaProducts(PharmaDto loggedInUser) {
-        List<Product> products = productRepository.findAllByPharma_Id(loggedInUser.getId());
-        return products.stream().map(product -> new ProductDto().toProductDto(product)).toList();
-    }
+    List<ProductDto> findAllPharmaProducts(PharmaDto loggedInUser);
 
-    public ProductDto updateProductById(String id, UpdateProductReq body) throws Exception {
-        Optional<Product> foundProduct = productRepository.findById(id);
-        if (foundProduct.isEmpty())
-            throw new Exception("Product not found");
+    ProductDto updateProductById(String id, UpdateProductReq body) throws Exception;
 
-        Product product = foundProduct.get();
-
-        product.setAvailable(body.isAvailable());
-        product.setPrice(body.getPrice());
-        product.setDescription(body.getDescription());
-        product.setBrandName(body.getBrandName());
-        product.setGenericName(body.getGenericName());
-
-        return new ProductDto().toProductDto(productRepository.save(product));
-    }
-
-    public boolean deleteProduct(String id) {
-        productRepository.deleteById(id);
-        return true;
-    }
+    boolean deleteProduct(String id);
 }
+
+
