@@ -15,6 +15,8 @@ const SignupSchema = Yup.object().shape({
   name: Yup.string().optional(),
   address: Yup.string().optional(),
   details: Yup.string().optional(),
+  lat: Yup.number(),
+  lng: Yup.number(),
 });
 
 export const RegisterPharma = () => {
@@ -34,8 +36,11 @@ export const RegisterPharma = () => {
           password: "",
           retype_password: "",
           name: "",
+          lat: 0,
+          lng: 0,
         }}
         onSubmit={async (values) => {
+          console.log(values);
           if (values.password === values.retype_password) {
             try {
               const response = await registerPharmaAPI({
@@ -44,6 +49,8 @@ export const RegisterPharma = () => {
                 email: values.email,
                 password: values.password,
                 name: values.name,
+                lat: values.lat,
+                lng: values.lng,
               });
               navigate("/auth");
             } catch (error) {
@@ -52,10 +59,10 @@ export const RegisterPharma = () => {
           }
         }}
       >
-        {({}) => (
+        {({ setFieldValue }) => (
           <>
             <Form className="my-4 px-4 w-full">
-              <div className="flex flex-col border-b pb-2">
+              <div className="flex flex-col pb-2">
                 <FormField
                   type="email"
                   name="email"
@@ -92,7 +99,18 @@ export const RegisterPharma = () => {
                   placeholder="Additional Details"
                   title="Additional Details"
                 />
-                <div className="flex  justify-between items-center">
+                <div className="border-t my-4">
+                  <div className="flex justify-start my-2">
+                    <span className="text-lg">Select location</span>
+                  </div>
+                  <Map
+                    onChange={(e) => {
+                      setFieldValue("lat", e.lat);
+                      setFieldValue("lng", e.lng);
+                    }}
+                  />
+                </div>
+                <div className="flex justify-between items-center">
                   <span className="text-sm">
                     Already have an account?
                     <Link
@@ -107,10 +125,6 @@ export const RegisterPharma = () => {
                   </button>
                 </div>
               </div>
-              <div className="flex justify-start my-2">
-                <span>Select location</span>
-              </div>
-              <Map />
             </Form>
           </>
         )}

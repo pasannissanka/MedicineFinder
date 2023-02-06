@@ -54,6 +54,8 @@ export interface ICreatePharma {
   details: string;
   address: string;
   name: string;
+  lat: number;
+  lng: number;
 }
 
 export interface IProduct {
