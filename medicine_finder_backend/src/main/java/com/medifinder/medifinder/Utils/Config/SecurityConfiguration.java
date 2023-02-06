@@ -74,8 +74,6 @@ public class SecurityConfiguration {
                 .disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/auth/public/**").permitAll()
-                .requestMatchers("/api/customer/**").hasAuthority("CUSTOMER")
-                .requestMatchers("/api/pharma/**").hasAuthority("PHARMA")
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()

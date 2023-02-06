@@ -2,11 +2,16 @@ package com.medifinder.medifinder.Auth.Dto;
 
 import com.medifinder.medifinder.Auth.Model.Role;
 import com.medifinder.medifinder.Auth.Model.User;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 @Data
-@Accessors(chain = true)
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserDto {
     private String email;
     private String id;
@@ -14,10 +19,12 @@ public class UserDto {
     private Boolean verified;
 
     public UserDto toUserDto(User data) {
-        return new UserDto()
-                .setEmail(data.getEmail())
-                .setId(data.getId())
-                .setRole((data.getRole()))
-                .setVerified(data.getVerified());
+        return UserDto
+                .builder()
+                .email(data.getEmail())
+                .id(data.getId())
+                .role((data.getRole()))
+                .verified(data.getVerified())
+                .build();
     }
 }

@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.medifinder.medifinder.Auth.Dto.UserDto;
 import com.medifinder.medifinder.Pharma.Models.Pharma;
 import com.medifinder.medifinder.Pharma.PharmaRepository;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,7 +12,8 @@ import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 @Data
-@Accessors(chain = true)
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class PharmaDto {
     private String id;
@@ -23,14 +21,20 @@ public class PharmaDto {
     private String details;
     private String address;
     private String name;
+    private Double lng;
+    private Double lat;
 
+    //    Lat = Y Long = X
     public PharmaDto toPharmaDto(Pharma data) {
-        return new PharmaDto()
-                .setId(data.getId())
-                .setUser(new UserDto().toUserDto(data.getUser()))
-                .setDetails(data.getDetails())
-                .setName(data.getName())
-                .setAddress(data.getAddress());
+        return PharmaDto.builder()
+                .user(new UserDto().toUserDto(data.getUser()))
+                .id(data.getId())
+                .details(data.getDetails())
+                .address(data.getAddress())
+                .name(data.getName())
+                .lng(data.getLocation().getX())
+                .lat(data.getLocation().getY())
+                .build();
     }
 
 }

@@ -28,7 +28,7 @@ public class ProductService {
                         .genericName(productReq.getGenericName())
                         .description(productReq.getDescription())
                         .brandName(productReq.getBrandName())
-                        .pharma(new Pharma().setId(loggedInUser.getId()))
+                        .pharma(Pharma.builder().id(loggedInUser.getId()).build())
                         .build()
         );
         return new ProductDto().toProductDto(newProduct);
@@ -41,8 +41,8 @@ public class ProductService {
         return new ProductDto().toProductDto(product.get());
     }
 
-    public List<ProductDto> searchProducts() {
-        List<Product> products = productRepository.findAll();
+    public List<ProductDto> searchProducts(String brandName, String genericName) {
+        List<Product> products = productRepository.searchProducts(brandName, genericName);
         return products.stream().map(product -> new ProductDto().toProductDto(product)).toList();
     }
 

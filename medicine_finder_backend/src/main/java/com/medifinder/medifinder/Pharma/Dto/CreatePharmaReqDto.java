@@ -10,4 +10,6 @@ public class CreatePharmaReqDto {
     private String name;
     private String details;
     private String address;
+    private double lng;
+    private double lat;
 }

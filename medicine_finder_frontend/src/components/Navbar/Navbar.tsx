@@ -9,6 +9,7 @@ import { ICustomerUser, IPharmaUser } from "../../utils/types";
 const Navbar = () => {
   const { logout, authenticatedUser } = useContext(AuthContext);
   const [name, setName] = useState("");
+  const [] = useState<{ status: boolean }>();
   const navigate = useNavigate();
 
   useEffect(() => {

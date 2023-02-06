@@ -2,11 +2,16 @@ package com.medifinder.medifinder.Customer.Dto;
 
 import com.medifinder.medifinder.Auth.Dto.UserDto;
 import com.medifinder.medifinder.Customer.Model.Customer;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 @Data
-@Accessors(chain = true)
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class CustomerDto {
 
     private String id;
@@ -15,6 +20,10 @@ public class CustomerDto {
     private UserDto user;
 
     public CustomerDto toCustomerDto(Customer customer) {
-        return new CustomerDto().setId(customer.getId()).setFirstName(customer.getFirstName()).setLastName(customer.getLastName()).setUser(new UserDto().toUserDto(customer.getUser()));
+        return CustomerDto.builder()
+                .id(customer.getId())
+                .firstName(customer.getFirstName())
+                .lastName(customer.getLastName())
+                .user(new UserDto().toUserDto(customer.getUser())).build();
     }
 }
