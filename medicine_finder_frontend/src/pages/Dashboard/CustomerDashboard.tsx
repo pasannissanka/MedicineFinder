@@ -26,13 +26,18 @@ const CustomerDashboard = () => {
         </div>
         <div className="border-b my-8 mx-2"></div>
         <div className="flex flex-col items-center justify-center mx-10 my-2">
-          <div className="w-full grid grid-cols-1 sm:grid-cols-5 gap-3">
-            {data?.data.data.map((pharma) => (
-              <CardWrapper key={pharma.id}>
-                <span className="text-lg">{pharma.name}</span>
-                <span className="text-sm text-gray-500">{pharma.details}</span>
-              </CardWrapper>
-            ))}
+          <div className="w-full grid grid-cols-1 sm:grid-cols-12 gap-3">
+            <div className="col-span-3">
+              {data?.data.data.map((pharma) => (
+                <CardWrapper key={pharma.id}>
+                  <span className="text-lg">{pharma.name}</span>
+                  <span className="text-sm text-gray-500">
+                    {pharma.details}
+                  </span>
+                </CardWrapper>
+              ))}
+            </div>
+            <div className="col-span-9"></div>
           </div>
         </div>
       </div>

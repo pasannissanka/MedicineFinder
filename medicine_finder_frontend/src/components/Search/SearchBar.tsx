@@ -13,29 +13,29 @@ const options = [
 const SearchBar = () => {
   const [searchParam, setSearchParam] = useState("");
 
-  const { refetch } = useQuery({
-    queryFn: searchProducts,
-    queryKey: ["productSearch", { name: searchParam }],
-    enabled: searchParam.length > 0,
-  });
+  // const { refetch } = useQuery({
+  //   queryFn: searchProducts,
+  //   queryKey: ["productSearch", { name: searchParam }],
+  //   enabled: searchParam.length > 0,
+  // });
 
   const loadOptions = (
     inputValue: string,
     callback: (options: any[]) => void
   ) => {
     setSearchParam(inputValue);
-    refetch().then(({ data }) => {
-      if (data?.data) {
-        const options = data.data.data.map((p) => {
-          return {
-            value: p.id,
-            label: p.brandName,
-            data: p,
-          };
-        });
-        callback(options);
-      }
-    });
+    // refetch().then(({ data }) => {
+    //   if (data?.data) {
+    //     const options = data.data.data.map((p) => {
+    //       return {
+    //         value: p.id,
+    //         label: p.brandName,
+    //         data: p,
+    //       };
+    //     });
+    //     callback(options);
+    //   }
+    // });
   };
 
   return (

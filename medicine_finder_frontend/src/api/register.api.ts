@@ -3,14 +3,14 @@ import { ICreateCustomer, ICreatePharma, ICustomerUser, IPharmaUser, ResponseBod
 
 export const registerCustomerAPI = async (payload: ICreateCustomer) => {
   return await AxiosClient.post<ResponseBody<ICustomerUser>>(
-    "/auth/public/customer",
+    "/auth/public/customers",
     payload
   );
 };
 
 export const registerPharmaAPI = async (payload: ICreatePharma) => {
     return await AxiosClient.post<ResponseBody<IPharmaUser>>(
-      "/auth/public/pharma",
+      "/auth/public/pharmas",
       payload
     );
   };
