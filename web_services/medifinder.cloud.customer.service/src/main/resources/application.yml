@@ -1,9 +1,9 @@
 spring:
   # Database
   datasource:
-    url: jdbc:postgresql://localhost:5431/medicine_finder_customer_db_v01
-    username: postgres
-    password: mysecretpassword
+    url: ${POSTGRES_DB_PATH}/${POSTGRES_DB_NAME}
+    username: ${POSTGRES_DB_USER}
+    password: ${POSTGRES_DB_PASSWORD}
   # JPA properties
   jpa:
     hibernate:

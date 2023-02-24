@@ -15,9 +15,10 @@ spring:
     generate-ddl: true
   # Application
   application:
-    name: admin-service
+    name: location-service
 server:
-  port: 8082
+  port: 8084
+# Eureka service registry
 eureka:
   client:
     serviceUrl:

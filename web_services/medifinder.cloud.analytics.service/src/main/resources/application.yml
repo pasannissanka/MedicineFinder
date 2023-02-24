@@ -1,0 +1,15 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/medifinder_db_analytics
+      database: medifinder_db_analytics
+  # Application
+  application:
+    name: analytics-service
+server:
+  port: 8085
+# Eureka service registry
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8083/eureka
