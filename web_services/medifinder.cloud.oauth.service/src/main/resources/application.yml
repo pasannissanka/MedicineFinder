@@ -15,9 +15,9 @@ spring:
     generate-ddl: true
   # Application
   application:
-    name: location-service
+    name: oauth-authorization-service
 server:
-  port: 8084
+  port: 8086
 # Eureka service registry
 eureka:
   instance:

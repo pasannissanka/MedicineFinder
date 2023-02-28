@@ -20,6 +20,9 @@ server:
   port: 8081
 # Eureka service registry
 eureka:
+  instance:
+    hostname: localhost
+    preferIpAddress: false
   client:
     serviceUrl:
       defaultZone: http://localhost:8083/eureka
