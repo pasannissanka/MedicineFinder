@@ -16,7 +16,6 @@ import java.util.UUID;
 @Entity
 @Table(name = "auth_user")
 @Accessors(chain = true)
-@NoArgsConstructor
 public class User implements UserDetails {
 
     @Id
@@ -38,6 +37,11 @@ public class User implements UserDetails {
         this.email = email;
         this.role = role;
         this.password = password;
+        this.verified = false;
+        this.emailVerificationToken = UUID.randomUUID().toString();
+    }
+
+    public User() {
         this.verified = false;
         this.emailVerificationToken = UUID.randomUUID().toString();
     }
