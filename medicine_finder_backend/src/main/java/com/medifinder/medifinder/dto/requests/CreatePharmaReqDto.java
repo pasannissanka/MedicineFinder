@@ -1,5 +1,7 @@
 package com.medifinder.medifinder.dto.requests;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data

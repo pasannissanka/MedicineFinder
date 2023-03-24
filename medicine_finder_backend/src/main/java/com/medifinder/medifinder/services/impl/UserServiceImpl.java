@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
         User newUser = new User(data.getEmail(), passwordEncoder.encode(data.getPassword()), data.getRole());
         userRepository.save(newUser);
 
-        emailService.sendVerifyEmail(newUser.getEmail(), newUser.getUsername(), newUser.getEmailVerificationToken());
+//        emailService.sendVerifyEmail(newUser.getEmail(), newUser.getUsername(), newUser.getEmailVerificationToken());
         return newUser;
     }
 
