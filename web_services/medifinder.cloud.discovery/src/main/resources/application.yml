@@ -5,8 +5,8 @@ server:
   port: 8083
 eureka:
   instance:
+    prefer-ip-address: false
     hostname: localhost
-    preferIpAddress: false
   client:
     registerWithEureka: false
     fetchRegistry: false

@@ -17,7 +17,7 @@ spring:
   application:
     name: oauth-authorization-service
 server:
-  port: 8086
+  port: 9000
 # Eureka service registry
 eureka:
   instance:
