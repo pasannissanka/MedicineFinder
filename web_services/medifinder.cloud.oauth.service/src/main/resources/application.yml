@@ -19,10 +19,16 @@ spring:
 server:
   port: 9000
 # Eureka service registry
-eureka:
-  instance:
-    hostname: localhost
-    preferIpAddress: false
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8083/eureka
+#eureka:
+#  instance:
+#    hostname: localhost
+#    preferIpAddress: false
+#  client:
+#    serviceUrl:
+#      defaultZone: http://localhost:8083/eureka
+
+logging:
+  level:
+    org:
+      springframework:
+        security: INFO

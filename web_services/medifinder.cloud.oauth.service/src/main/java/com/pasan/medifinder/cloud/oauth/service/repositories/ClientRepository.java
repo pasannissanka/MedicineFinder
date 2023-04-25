@@ -1,12 +1,12 @@
 package com.pasan.medifinder.cloud.oauth.service.repositories;
 
-import com.pasan.medifinder.cloud.oauth.service.entities.AuthUser;
+import com.pasan.medifinder.cloud.oauth.service.entities.oauth.Client;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<AuthUser, Long> {
-    Optional<AuthUser> findByUsername(String username);
+public interface ClientRepository extends JpaRepository<Client, String> {
+    Optional<Client> findByClientId(String clientId);
 }
