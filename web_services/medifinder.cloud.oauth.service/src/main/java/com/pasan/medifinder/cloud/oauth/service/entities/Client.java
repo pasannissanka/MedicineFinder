@@ -1,16 +1,17 @@
-package com.pasan.medifinder.cloud.oauth.service.entities.oauth;
+package com.pasan.medifinder.cloud.oauth.service.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import java.time.Instant;
+import java.util.Objects;
 
 @Entity
 @Table(name = "`client`")
-@Data
+@Getter
+@Setter
+@ToString
 public class Client {
     @Id
     private String id;
@@ -31,4 +32,17 @@ public class Client {
     private String clientSettings;
     @Column(length = 2000)
     private String tokenSettings;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Client client = (Client) o;
+        return getId() != null && Objects.equals(getId(), client.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

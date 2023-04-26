@@ -7,7 +7,6 @@ import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import com.pasan.medifinder.cloud.oauth.service.repositories.AuthUserDetailsRepository;
 import com.pasan.medifinder.cloud.oauth.service.repositories.ClientRepository;
-import com.pasan.medifinder.cloud.oauth.service.services.JpaRegisteredClientRepository;
 import com.pasan.medifinder.cloud.oauth.service.services.JpaUserDetailsManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,16 +18,10 @@ import org.springframework.security.config.annotation.web.configurers.oauth2.ser
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.core.AuthorizationGrantType;
-import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
-import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
-import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
-import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 
@@ -40,13 +33,10 @@ import java.util.UUID;
 
 @Configuration
 public class SecurityConfig {
-
-    private final ClientRepository clientRepository;
     private final AuthUserDetailsRepository authUserDetailsRepository;
 
     @Autowired
-    public SecurityConfig(ClientRepository clientRepository, AuthUserDetailsRepository authUserDetailsRepository) {
-        this.clientRepository = clientRepository;
+    public SecurityConfig(AuthUserDetailsRepository authUserDetailsRepository) {
         this.authUserDetailsRepository = authUserDetailsRepository;
     }
 

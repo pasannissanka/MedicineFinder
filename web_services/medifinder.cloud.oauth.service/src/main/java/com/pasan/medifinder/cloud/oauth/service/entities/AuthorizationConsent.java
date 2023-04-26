@@ -1,4 +1,4 @@
-package com.pasan.medifinder.cloud.oauth.service.entities.oauth;
+package com.pasan.medifinder.cloud.oauth.service.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;

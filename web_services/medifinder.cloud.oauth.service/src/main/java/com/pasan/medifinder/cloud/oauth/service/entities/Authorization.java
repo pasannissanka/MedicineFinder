@@ -1,9 +1,6 @@
-package com.pasan.medifinder.cloud.oauth.service.entities.oauth;
+package com.pasan.medifinder.cloud.oauth.service.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.Instant;
@@ -13,7 +10,6 @@ import java.time.Instant;
 @Data
 public class Authorization {
     @Id
-    @Column
     private String id;
     private String registeredClientId;
     private String principalName;

@@ -3,7 +3,7 @@ package com.pasan.medifinder.cloud.oauth.service.services;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pasan.medifinder.cloud.oauth.service.entities.oauth.Client;
+import com.pasan.medifinder.cloud.oauth.service.entities.Client;
 import com.pasan.medifinder.cloud.oauth.service.repositories.ClientRepository;
 import org.springframework.security.jackson2.SecurityJackson2Modules;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;

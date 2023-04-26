@@ -1,6 +1,6 @@
 package com.pasan.medifinder.cloud.oauth.service.services;
 
-import com.pasan.medifinder.cloud.oauth.service.entities.oauth.AuthorizationConsent;
+import com.pasan.medifinder.cloud.oauth.service.entities.AuthorizationConsent;
 import com.pasan.medifinder.cloud.oauth.service.repositories.AuthorizationConsentRepository;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.security.core.GrantedAuthority;
