@@ -1,5 +1,8 @@
 package com.pasan.medifinder.cloud.oauth.service.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -11,6 +14,8 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
+@JsonSerialize
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AuthGrantedAuthority implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +23,8 @@ public class AuthGrantedAuthority implements GrantedAuthority {
     private String authority;
 
     @ManyToOne
-    @JoinColumn(name = "auth_user_detail_id")
+    @JoinColumn(name = "auth_user_details_id")
+    @JsonIgnore
     private AuthUserDetails authUserDetails;
 
     @Override

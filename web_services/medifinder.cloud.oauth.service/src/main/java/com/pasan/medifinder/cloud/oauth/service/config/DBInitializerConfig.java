@@ -52,7 +52,7 @@ public class DBInitializerConfig {
                 logger.info("CREATE NEW CLIENT [MESSAGING-CLIENT]");
                 RegisteredClient registeredClient = RegisteredClient.withId("1")
                         .clientId("messaging-client")
-                        .clientSecret("{noop}secret")
+                        .clientSecret(passwordEncoder.encode("secret"))
                         .clientName("messaging-client")
                         .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                         .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)

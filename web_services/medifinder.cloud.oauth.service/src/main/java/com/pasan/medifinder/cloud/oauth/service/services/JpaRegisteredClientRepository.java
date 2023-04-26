@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pasan.medifinder.cloud.oauth.service.entities.Client;
 import com.pasan.medifinder.cloud.oauth.service.repositories.ClientRepository;
+import org.springframework.security.jackson2.CoreJackson2Module;
 import org.springframework.security.jackson2.SecurityJackson2Modules;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
@@ -35,6 +36,7 @@ public class JpaRegisteredClientRepository implements RegisteredClientRepository
         List<Module> securityModules = SecurityJackson2Modules.getModules(classLoader);
         this.objectMapper.registerModules(securityModules);
         this.objectMapper.registerModule(new OAuth2AuthorizationServerJackson2Module());
+        this.objectMapper.registerModule(new CoreJackson2Module());
     }
 
     @Override
