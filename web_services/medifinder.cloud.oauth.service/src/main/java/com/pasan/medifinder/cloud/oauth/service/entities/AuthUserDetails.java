@@ -1,7 +1,7 @@
 package com.pasan.medifinder.cloud.oauth.service.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.*;
@@ -28,6 +28,7 @@ public class AuthUserDetails implements UserDetails, Serializable {
     private String password;
     private boolean enabled;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "authUserDetails", fetch = FetchType.EAGER)
     private Set<AuthGrantedAuthority> authorities;
 

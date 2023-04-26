@@ -18,7 +18,7 @@ import java.util.Optional;
 public class JpaUserDetailsManager implements UserDetailsManager {
 
     private final AuthUserDetailsRepository authUserDetailsRepository;
-    private SecurityContextHolderStrategy securityContextHolderStrategy = SecurityContextHolder.getContextHolderStrategy();
+    private final SecurityContextHolderStrategy securityContextHolderStrategy = SecurityContextHolder.getContextHolderStrategy();
 
 
     @Autowired
@@ -56,7 +56,6 @@ public class JpaUserDetailsManager implements UserDetailsManager {
             userDetails.setPassword(newPassword);
             authUserDetailsRepository.save(userDetails);
         }
-
     }
 
     @Override
